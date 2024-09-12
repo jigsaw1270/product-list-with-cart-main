@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Product list with cart</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+     :root {
+    --color-orange: hsl(14, 86%, 42%);
+    --color-green: hsl(159, 69%, 38%);
+
+    --color-white: hsl(20, 50%, 98%);
+    --color-white-100: hsl(13, 31%, 94%);
+    --color-brown-100: hsl(14, 25%, 72%);
+    --color-brown-200: hsl(7, 20%, 60%);
+    --color-brown-300: hsl(12, 20%, 44%);
+    --color-brown-dark: hsl(14, 65%, 9%);
+  }
+  .bg-pale{
+    background-color: var(--color-white-100);
+  }
+.button-outline{
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--color-brown-300);
+}
+  .brown-text{
+    color : var(--color-brown-dark)
+  }
+    body{
+      background-color: var(--color-white-100);
+      font-family: "Red Hat Text", sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container mx-auto p-6 bg-pale flex flex-row gap-16" x-data="dessertCards()" x-init="fetchDesserts()">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!--  Desserts Section -->
+      <div class="lg:col-span-3">
+        <h1 class="text-3xl font-bold mb-4">Desserts</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" >
+          <!--  Dessert Card -->
+         
+          <template x-for="dessert in desserts" :key="dessert.name">
+            <div class="bg-pale rounded-lg  overflow-hidden hover:shadow-xl transition-shadow">
+             <div class="flex flex-col items-center">
+              <img :src="dessert.image.desktop" :class="{'border-[var(--color-orange)] border-[3px]': isItemInCart(dessert)}" alt="dessert.name" class="w-full h-48 object-cover relative">
+              <button class="bg-white brown-text button-outline px-4 py-2 rounded-full hover:text-[var(--color-orange)] hover:border-[var(--color-orange)] mx-auto relative bottom-5 font-semibold" @click="addToCart(dessert)"
+              x-text="isItemInCart(dessert) ? 'Added to Cart' : 'Add to Cart'">>
+                <img src="./assets/images/icon-add-to-cart.svg" alt="cart" class="inline mr-1 w-5">Add to Cart
+              </button>
+             </div>
+              <div class="p-4 pt-0">
+                <p class="text-sm text-[var(--color-brown-300)]" x-text="dessert.category"></p>
+                <h2 class="text-lg font-semibold  text-[var(--color-brown-dark)]" x-text="dessert.name"></h2>
+               <div class=" flex justify-between items-center">
+                  <p class="text-lg font-semibold text-[var(--color-orange)]">$<span x-text="dessert.price"></span></p>
+                  
+                </div>
+              </div>
+            </div>
+          </template>
+       
+          <!-- cart -->
+        
+    
+        </div>
+      
+      </div>
+  
+     </div>
+      <div class="bg-white rounded-lg shadow-lg p-6 w-4/12 h-fit">
+        <h2 class="text-xl font-bold mb-4 text-[var(--color-orange)]">Your Cart</h2>
+        <div x-show="cart.length > 0" class="space-y-4">
+          <template x-for="item in cart" :key="item.name">
+            <div class="flex justify-between items-center" >
+              <ul>
+                <li>
+                    <p class="font-semibold" x-text="item.name"></p> 
+                  <p class="text-sm text-gray-500">
+                      $<span x-text="(item.price * item.quantity).toFixed(2)"></span> 
+                  </p>
+                </li>
+              </ul>
+              <div class="flex items-center space-x-2">
+                  <button class="rounded-full button-outline p-0.5" @click="decreaseQuantity(item)"><img src="./assets/images/icon-decrement-quantity.svg" alt=""></button>
+                  <p x-text="item.quantity"></p> 
+                  <button class="rounded-full button-outline p-0.5" @click="increaseQuantity(item)"><img src="./assets/images/icon-increment-quantity.svg" alt=""></button>
+                  <button class="text-red-500 hover:text-red-600 rounded-full button-outline p-0.5" @click="removeFromCart(item)"><img src="./assets/images/icon-remove-item.svg" alt=""></button>
+              </div>
+          </div>
+          </template>
+        </div>
+        <div x-show="cart.length > 0" class="mt-6">
+          <div class="flex justify-between items-center">
+            <p class="font-semibold">Order Total:</p>
+            <p class="text-lg font-bold">$<span x-text="orderTotal.toFixed(2)"></span></p>
+          </div>
+          <button class="bg-orange-500 text-white w-full mt-4 py-2 rounded-full hover:bg-orange-600 transition">Confirm Order</button>
+        </div>
+        <p x-show="cart.length === 0" class="text-gray-500 text-center mt-6">Your cart is empty.</p>
+      </div> 
+  </div>
+  
+  <script src="./script.js"></script>
+</body>
+</html>
