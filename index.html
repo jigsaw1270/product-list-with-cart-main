@@ -106,19 +106,38 @@
   
      </div>
       <div class="bg-white rounded-lg shadow-lg p-6 w-4/12 h-fit">
-        <h2 class="text-xl font-bold mb-4 text-[var(--color-orange)]">Your Cart</h2>
+        <h2 class="text-2xl font-bold mb-4 text-[var(--color-orange)]">Your Cart</h2>
         <div x-show="cart.length > 0" class="space-y-4">
           <template x-for="item in cart" :key="item.name">
-            <div class="flex justify-between items-center" >
+            <div class="flex justify-between items-center border-b-2 border-[var(--color-white-100)]" >
               <ul>
                 <li>
-                    <p class="font-semibold" x-text="item.name"></p> 
-                  <p >
-                  <div class="flex ">
-                    <p class="font-semibold text-orange-600" x-text="item.quantity"></p><span class="font-semibold text-orange-600">x</span> <span class="ml-8">@$</span><p class="mr-4" x-text="item.price.toFixed(2)"></p>  $<p class="mr-4" x-text="(item.price * item.quantity).toFixed(2)"></p> 
+                    <p class="font-semibold my-4" x-text="item.name"></p> 
+                  <!-- <p >
+                  <div class="flex pb-4">
+                    <p class="font-semibold text-[var(--color-orange)]" x-text="item.quantity"></p><span class="font-semibold text-[var(--color-orange)]">x</span> <span class="ml-8">@$</span><p class="mr-4 text-[var(--color-brown-300)]" x-text="item.price.toFixed(2)"></p>  $<p class="mr-4 text-[var(--color-brown-300)] font-bold" x-text="(item.price * item.quantity).toFixed(2)"></p> 
                     
+                    <button class=" rounded-full border border-1 border-[var(--color-brown-300)] px-1.5 ml-32 " @click="removeFromCart(item)">
+                      <img src="./assets/images/icon-remove-item.svg" alt="">
+                  </button>
+              
                   </div>
-                  </p>
+                  </p> -->
+                  <div class="flex justify-between items-center w-[350px] lg:w-[420px] pb-4">
+                    <div class="flex items-center">
+                      <p class="font-semibold text-[var(--color-orange)]" x-text="item.quantity"></p>
+                      <span class="font-semibold text-[var(--color-orange)]">x</span>
+                      <span class="ml-8">@$</span>
+                      <p class="mr-4 text-[var(--color-brown-300)]" x-text="item.price.toFixed(2)"></p>
+                      $<p class="mr-4 text-[var(--color-brown-300)] font-bold" x-text="(item.price * item.quantity).toFixed(2)"></p>
+                    </div>
+                    
+                 <div>
+                  <button class="rounded-full border border-1 border-[var(--color-brown-300)] px-1 py-1" @click="removeFromCart(item)">
+                    <img src="./assets/images/icon-remove-item.svg" alt="">
+                  </button>
+                 </div>
+                  </div>
                 </li>
               </ul>
               <!-- <div class="flex items-center space-x-2">
@@ -132,11 +151,16 @@
         </div>
         <div x-show="cart.length > 0" class="mt-6">
           <div class="flex justify-between items-center">
-            <p class="font-semibold">Order Total:</p>
-            <p class="text-lg font-bold">$<span x-text="orderTotal.toFixed(2)"></span></p>
+            <p class="font-semibold text-[var(--color-brown-300)]">Order Total:</p>
+            <p class="text-2xl font-extrabold">$<span x-text="orderTotal.toFixed(2)"></span></p>
           </div>
+          <div class="bg-[var(--color-white-100)] text-white w-full mt-4 py-2 "> <p class="text-sm text-[var(--color-brown-300)] text-center py-2">
+            This  is a <span class="font-bold">carbon-neutral</span> delivery
+          </p></div>
           <button class="bg-orange-500 text-white w-full mt-4 py-2 rounded-full hover:bg-orange-600 transition">Confirm Order</button>
         </div>
+
+
        
         <div x-show="cart.length === 0" class="flex flex-col items-center mt-6"/>
         <img src="./assets/images/illustration-empty-cart.svg" alt="" ><div class="text-[var(--color-brown-300)]">
