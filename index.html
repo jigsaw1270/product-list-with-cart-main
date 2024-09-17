@@ -58,10 +58,33 @@
             <div class="bg-pale rounded-lg  overflow-hidden hover:shadow-xl transition-shadow">
              <div class="flex flex-col items-center">
               <img :src="dessert.image.desktop" :class="{'border-[var(--color-orange)] border-[3px]': isItemInCart(dessert)}" alt="dessert.name" class="w-full h-48 object-cover relative">
-              <button class="bg-white brown-text button-outline px-4 py-2 rounded-full hover:text-[var(--color-orange)] hover:border-[var(--color-orange)] mx-auto relative bottom-5 font-semibold" @click="addToCart(dessert)"
+              <!-- <button class="bg-white brown-text button-outline px-4 py-2 rounded-full hover:text-[var(--color-orange)] hover:border-[var(--color-orange)] mx-auto relative bottom-5 font-semibold" @click="addToCart(dessert)"
               x-text="isItemInCart(dessert) ? 'Added to Cart' : 'Add to Cart'">>
                 <img src="./assets/images/icon-add-to-cart.svg" alt="cart" class="inline mr-1 w-5">Add to Cart
-              </button>
+              </button> -->
+              <div>
+                <!-- Conditional Button -->
+                <div x-show="!isItemInCart(dessert)" class="add-to-cart">
+                    <button @click="addToCart(dessert)" class="bg-white brown-text button-outline px-4 py-2 rounded-full hover:text-[var(--color-orange)] hover:border-[var(--color-orange)] mx-auto relative bottom-5 font-semibold">
+                        <span x-text="'Add to Cart'"></span>
+                    </button>
+                </div>
+            
+                <!-- Conditional Quantity Controls -->
+                <div x-show="isItemInCart(dessert)" class="flex items-center space-x-5 bg-[var(--color-orange)] text-white  px-4 py-2 rounded-full  hover:border-[var(--color-orange)] mx-auto relative bottom-5 font-semibold">
+                    <button class="rounded-full border border-white py-[5px] px-[2px]" @click="decreaseQuantity(dessert)">
+                        <img src="./assets/images/icon-decrement-quantity.svg" alt="">
+                    </button>
+                    <p x-text="getQuantity(dessert)"></p> 
+                    <button class="rounded-full border border-white p-0.5" @click="increaseQuantity(dessert)">
+                        <img src="./assets/images/icon-increment-quantity.svg" alt="">
+                    </button>
+                    <!-- <button class="text-red-500 hover:text-red-600 rounded-full button-outline p-0.5" @click="removeFromCart(dessert)">
+                        <img src="./assets/images/icon-remove-item.svg" alt="">
+                    </button> -->
+                </div>
+            </div>
+            
              </div>
               <div class="p-4 pt-0">
                 <p class="text-sm text-[var(--color-brown-300)]" x-text="dessert.category"></p>
@@ -90,17 +113,20 @@
               <ul>
                 <li>
                     <p class="font-semibold" x-text="item.name"></p> 
-                  <p class="text-sm text-gray-500">
-                      $<span x-text="(item.price * item.quantity).toFixed(2)"></span> 
+                  <p >
+                  <div class="flex ">
+                    <p class="font-semibold text-orange-600" x-text="item.quantity"></p><span class="font-semibold text-orange-600">x</span> <span class="ml-8">@$</span><p class="mr-4" x-text="item.price.toFixed(2)"></p>  $<p class="mr-4" x-text="(item.price * item.quantity).toFixed(2)"></p> 
+                    
+                  </div>
                   </p>
                 </li>
               </ul>
-              <div class="flex items-center space-x-2">
+              <!-- <div class="flex items-center space-x-2">
                   <button class="rounded-full button-outline p-0.5" @click="decreaseQuantity(item)"><img src="./assets/images/icon-decrement-quantity.svg" alt=""></button>
                   <p x-text="item.quantity"></p> 
                   <button class="rounded-full button-outline p-0.5" @click="increaseQuantity(item)"><img src="./assets/images/icon-increment-quantity.svg" alt=""></button>
                   <button class="text-red-500 hover:text-red-600 rounded-full button-outline p-0.5" @click="removeFromCart(item)"><img src="./assets/images/icon-remove-item.svg" alt=""></button>
-              </div>
+              </div> -->
           </div>
           </template>
         </div>
@@ -111,7 +137,11 @@
           </div>
           <button class="bg-orange-500 text-white w-full mt-4 py-2 rounded-full hover:bg-orange-600 transition">Confirm Order</button>
         </div>
-        <p x-show="cart.length === 0" class="text-gray-500 text-center mt-6">Your cart is empty.</p>
+       
+        <div x-show="cart.length === 0" class="flex flex-col items-center mt-6"/>
+        <img src="./assets/images/illustration-empty-cart.svg" alt="" ><div class="text-[var(--color-brown-300)]">
+          Your added items will appear  here
+        </div></div>
       </div> 
   </div>
   

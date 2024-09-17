@@ -16,12 +16,6 @@ function dessertCards() {
             // Convert proxy to plain object
             const plainDessert = JSON.parse(JSON.stringify(dessert));
         
-            console.log('Adding to Cart:', plainDessert); 
-            console.log('name:', plainDessert.name );
-
-
-          
-        
             let itemInCart = this.cart.find(item => item.name === plainDessert.name);
         
             if (itemInCart) {
@@ -36,36 +30,39 @@ function dessertCards() {
         
                 this.cart.push(item);
             }
-        
-            console.log('Cart:', JSON.parse(JSON.stringify(this.cart))); 
-        }
-        ,
+        },
+
         isItemInCart(dessert) {
             return this.cart.some(item => item.name === dessert.name);
         },
 
-        increaseQuantity(item) {
-            item.quantity++;
-            this.$nextTick(() => {});
+        getQuantity(dessert) {
+            const cartItem = this.cart.find(item => item.name === dessert.name);
+            return cartItem ? cartItem.quantity : 0; // Return the quantity if the item is in the cart
         },
 
-        decreaseQuantity(item) {
-            if (item.quantity > 1) {
-                item.quantity--;
-            } else {
-                this.removeFromCart(item);
+        increaseQuantity(dessert) {
+            const cartItem = this.cart.find(item => item.name === dessert.name);
+            if (cartItem) {
+                cartItem.quantity++;
             }
-            this.$nextTick(() => {});
         },
 
-        removeFromCart(item) {
-            this.cart = this.cart.filter(cartItem => cartItem.name !== item.name);
-            this.$nextTick(() => {});
+        decreaseQuantity(dessert) {
+            const cartItem = this.cart.find(item => item.name === dessert.name);
+            if (cartItem && cartItem.quantity > 1) {
+                cartItem.quantity--;
+            } else {
+                this.removeFromCart(dessert);
+            }
+        },
+
+        removeFromCart(dessert) {
+            this.cart = this.cart.filter(cartItem => cartItem.name !== dessert.name);
         },
 
         get orderTotal() {
             return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
-            
         }
     };
 }
