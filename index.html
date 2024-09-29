@@ -47,7 +47,7 @@
 </head>
 <body>
 
-  <div class="container mx-auto p-6 bg-pale flex flex-row gap-16" x-data="dessertCards()" x-init="fetchDesserts()">
+  <div class="container mx-auto p-6 bg-pale flex flex-col md:flex-row gap-16" x-data="dessertCards()" x-init="fetchDesserts()">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <!--  Desserts Section -->
       <div class="lg:col-span-3">
@@ -106,7 +106,7 @@
       </div>
   
      </div>
-      <div class="bg-white rounded-lg shadow-lg p-6 w-1/2 md:w-2/5 h-fit">
+      <div class="bg-white rounded-lg shadow-lg p-6 w-full md:w-2/5 h-fit">
         <h2 class="text-2xl font-bold mb-4 text-[var(--color-orange)]">Your Cart</h2>
         <div x-show="cart.length > 0" class="space-y-4">
           <template x-for="item in cart" :key="item.name">
@@ -119,10 +119,10 @@
                     <div class="flex items-center">
                       <p class="font-semibold text-[var(--color-orange)]" x-text="item.quantity"></p>
                       <span class="font-semibold text-[var(--color-orange)]">x</span>
-                      <span class="ml-8">@$</span>
+                      <span class="ml-8 text-[var(--color-brown-300)]">@$</span>
                       <p class="mr-4 text-[var(--color-brown-300)]" x-text="item.price.toFixed(2)"></p>
                  <div class="flex ml-1 wrap">
-                  <span>$</span><p class="mr-4 text-[var(--color-brown-300)] font-bold " x-text="(item.price * item.quantity).toFixed(2)"></p>
+                  <span class="text-[var(--color-brown-300)] font-bold">$</span><p class="mr-4 text-[var(--color-brown-300)] font-bold " x-text="(item.price * item.quantity).toFixed(2)"></p>
                  </div>
                     </div>
                     
@@ -152,10 +152,13 @@
   This  is a <span class="font-bold">carbon-neutral</span> delivery
           </p></div>
           <button  onclick="my_modal_1.showModal()" class="bg-orange-500 text-white w-full mt-4 py-2 rounded-full hover:bg-orange-600 transition">Confirm Order</button>
-          <dialog id="my_modal_1" class="modal">
+          <dialog id="my_modal_1" class="modal modal-bottom sm:modal-middle">
             <div class="modal-box">
+              <img src="./assets/images/icon-order-confirmed.svg" class="mb-3" alt="order-confirmed">
+              <h2 class="text-4xl font-bold text-[var(--color-brown-dark)] mb-2">Order confirmed</h2>
+              <p class="text-[var(--color-brown-200)] text-base mb-8">We hope  you like  your  food!</p>
               <template x-for="item in cart" :key="item.name">
-                <div class="flex items-center border-b-2 border-[var(--color-white-100)] pb-4">
+                <div class="flex items-center border-b-2 border-[var(--color-white-100)] pb-4 bg-[var(--color-white-100)]">
                 <div class="mr-2">
                   <template x-if="item.image && item.image.thumbnail">
                     <img :src="item.image.thumbnail" alt="item.name">
@@ -176,12 +179,12 @@
                       <div class="flex items-center">
                         <p class="font-semibold text-[var(--color-orange)]" x-text="item.quantity"></p>
                         <span class="font-semibold text-[var(--color-orange)]">x</span>
-                        <span class="ml-8 ">@$</span>
+                        <span class="ml-8 text-[var(--color-brown-300)]">@$</span>
                         <p class="mr-4 text-[var(--color-brown-300)] " x-text="item.price.toFixed(2)"></p>
                       </div>
                       
                       <div class="flex ml-36">
-                        <span>$</span>   
+                        <span class="text-[var(--color-brown-300)] font-bold">$</span>   
                         <p class="mr-4 text-[var(--color-brown-300)] font-bold" x-text="(item.price * item.quantity).toFixed(2)"></p>
                       </div> 
                     </div>
@@ -192,6 +195,10 @@
            
               </template>
               <div >
+                <div class="flex justify-between items-center my-6">
+                  <p class="font-semibold text-[var(--color-brown-300)]">Order Total:</p>
+                  <p class="text-2xl font-extrabold">$<span x-text="orderTotal.toFixed(2)"></span></p>
+                </div>
                 <form method="dialog">
                   <!-- if there is a button in form, it will close the modal -->
                   <button onclick="location.reload()" class="bg-orange-500 text-white w-full mt-4 py-2 rounded-full hover:bg-orange-600 transition">Start new order </button>
