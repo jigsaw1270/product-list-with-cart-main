@@ -25,7 +25,8 @@ function dessertCards() {
                     name: plainDessert.name || 'Unnamed Item',  
                     price: plainDessert.price || 0,             
                     category: plainDessert.category || 'Other', 
-                    quantity: 1
+                    quantity: 1,
+                    image: plainDessert.image || { desktop: './assets/images/default-desktop.png' } 
                 };
         
                 this.cart.push(item);
