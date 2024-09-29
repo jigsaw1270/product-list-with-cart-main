@@ -13,7 +13,7 @@ This is a solution to the [Product list with cart challenge on Frontend Mentor](
 - [Author](#author)
 
 
-**Note: Delete this note and update the table of contents based on what sections you keep.**
+
 
 ## Overview
 
@@ -36,8 +36,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Add solution URL here](https://github.com/jigsaw1270/product-list-with-cart-main)
+- Live Site URL: [Add live site URL here](https://letsshopdessert.netlify.app/)
 
 ## My process
 
@@ -61,4 +61,4 @@ Users should be able to:
 
 - https://github.com/jigsaw1270
 
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
+
